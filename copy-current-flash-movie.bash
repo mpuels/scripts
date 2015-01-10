@@ -22,8 +22,8 @@
 #OPEN_FLASH_FILE_LINE="plugin-co 6936 mpuels 19u REG 8,1 143228557 4068553 /tmp/FlashXXw3lGuN (deleted)"
 OPEN_FLASH_FILE_LINE=$(lsof | grep Flash | head -n1)
 
-PLUGIN_PID=$(cut -f2 -d' '  <<< $OPEN_FLASH_FILE_LINE)
-FILE_DESCRIPTOR=$(cut -f4 -d' '  <<< $OPEN_FLASH_FILE_LINE | sed 's/u//g')
+PLUGIN_PID=$(cut -f2 -d' ' <<< $OPEN_FLASH_FILE_LINE)
+FILE_DESCRIPTOR=$(cut -f4 -d' ' <<< $OPEN_FLASH_FILE_LINE | sed 's/u//g')
 SWF_FILE=/proc/$PLUGIN_PID/fd/$FILE_DESCRIPTOR
 
 SWF_FILE_DEST=/tmp/movie.swf
