@@ -18,15 +18,15 @@ function main
     local cardNumberLogitech=$(maybeGetCardNumberOfLogitechHeadset)
     case $cardNumberLogitech in
 	"") changeVolumeOfLoudspeakers $direction ;;
-	*) changeVolumeOfHeadphones $direction ;;
+	*) changeVolumeOfHeadphones $direction $cardNumberLogitech ;;
     esac
 }
 
 function maybeGetCardNumberOfLogitechHeadset
 {
     aplay -l \
-	| grep 'Logitech G930 Headset' \
-	| sed 's/^Karte \([0-9]\): .\+$/\1/g'
+        | grep 'Logitech' \
+        | sed 's/^[A-Za-z]\+ \([0-9]\): .\+/\1/g'
 }
 
 function changeVolumeOfLoudspeakers
@@ -41,8 +41,10 @@ function changeVolumeOfLoudspeakers
 function changeVolumeOfHeadphones
 {
     local direction=$1
+    local cardNumber=$2
+
     case $direction in
-	+|-) amixer -q -c 1 sset PCM ${DELTA_VOLUME}$direction ;;
+	+|-) amixer -q -c $cardNumber sset PCM ${DELTA_VOLUME}$direction ;;
 	*) ;;
     esac
 }
